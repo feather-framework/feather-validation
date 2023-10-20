@@ -1,3 +1,3 @@
-public enum ValidatorError: Error {
-    case result([Failure])
+public struct ValidatorError: Error {
+    public let failures: [Failure]
 }

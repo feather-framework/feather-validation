@@ -3,17 +3,19 @@ public protocol Validator: Sendable {
 }
 
 public extension Validator {
-    
+
     func failures() async -> [Failure] {
         do {
             try await validate()
             return []
         }
-        catch ValidatorError.result(let failures) {
-            return failures
+        catch let error as ValidatorError {
+            return error.failures
         }
         catch {
-            fatalError("Validators are only allowed to throw `ValidatorError.result([Failure])`. \(error)")
+            fatalError(
+                "Validators are only allowed to throw `ValidatorError.result([Failure])`. \(error)"
+            )
         }
     }
 

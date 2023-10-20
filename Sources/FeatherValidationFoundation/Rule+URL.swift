@@ -10,13 +10,11 @@ extension Rule where T == String {
             message: message ?? "The value is an invalid URL."
         ) { value in
             guard
-                let url = URL(string: value), url.isFileURL || (url.host != nil && url.scheme != nil)
+                let url = URL(string: value),
+                url.isFileURL || (url.host != nil && url.scheme != nil)
             else {
                 throw RuleError.invalid
             }
         }
     }
 }
-
-
-

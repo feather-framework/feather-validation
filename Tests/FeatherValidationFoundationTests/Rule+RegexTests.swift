@@ -9,33 +9,30 @@ final class Rule_RegexTests: XCTestCase {
             key: "email",
             value: "mail.tib@gmail.com",
             rules: [
-                .email(),
+                .email()
             ]
         )
         try await v.validate()
     }
-    
+
     func testInvalidEmail() async throws {
         let v = KeyValueValidator(
             key: "email",
             value: "@gmail.com",
             rules: [
-                .email(rule: .international),
+                .email(rule: .international)
             ]
         )
         do {
             try await v.validate()
             XCTFail("Validator should fail.")
         }
-        catch ValidatorError.result(let failures) {
-            XCTAssertEqual(failures.count, 1)
+        catch let error as ValidatorError {
+            XCTAssertEqual(error.failures.count, 1)
         }
         catch {
             XCTFail("\(error)")
         }
     }
-    
-   
+
 }
-
-

@@ -10,33 +10,30 @@ final class Rule_CharacterSetTests: XCTestCase {
             key: "ch",
             value: ascii,
             rules: [
-                .characterSet(.ascii),
+                .characterSet(.ascii)
             ]
         )
         try await v.validate()
     }
-    
+
     func testInvalid() async throws {
         let v = KeyValueValidator(
             key: "ch",
             value: "árvíztűrő tükörfúrógép",
             rules: [
-                .characterSet(.ascii),
+                .characterSet(.ascii)
             ]
         )
         do {
             try await v.validate()
             XCTFail("Validator should fail.")
         }
-        catch ValidatorError.result(let failures) {
-            XCTAssertEqual(failures.count, 1)
+        catch let error as ValidatorError {
+            XCTAssertEqual(error.failures.count, 1)
         }
         catch {
             XCTFail("\(error)")
         }
     }
-    
-   
+
 }
-
-

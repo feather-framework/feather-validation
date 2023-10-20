@@ -48,8 +48,8 @@ let v = GroupValidator(strategy: .parallel) {
 do {
     try await v.validate()
 }
-catch ValidatorError.result(let failures) {
-    for failure in failures {
+catch let error as ValidatorError {
+    for failure in error.failures {
         print(failure.key, failure.message)
     }
 }

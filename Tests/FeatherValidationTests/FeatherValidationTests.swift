@@ -2,7 +2,7 @@ import FeatherValidation
 import XCTest
 
 final class FeatherValidationTests: XCTestCase {
-    
+
     func testBasicExample() async throws {
         let key = "foo"
         let value = ""
@@ -16,9 +16,12 @@ final class FeatherValidationTests: XCTestCase {
                     .required(message: "req"),
                     .min(length: 2, message: "min"),
                     .max(length: 32),
-                    .init(message: "ouch", { _ in
-                        throw RuleError.invalid
-                    }),
+                    .init(
+                        message: "ouch",
+                        { _ in
+                            throw RuleError.invalid
+                        }
+                    ),
                 ]
             )
         }
@@ -27,12 +30,12 @@ final class FeatherValidationTests: XCTestCase {
             try await v.validate()
             XCTFail("Validator should fail.")
         }
-        catch ValidatorError.result(let failures) {
-            XCTAssertEqual(failures.count, 3)
-            for failure in failures {
+        catch let error as ValidatorError {
+            XCTAssertEqual(error.failures.count, 3)
+            for failure in error.failures {
                 XCTAssertEqual(failure.key, key)
             }
-            let messages = failures.map { $0.message }
+            let messages = error.failures.map { $0.message }
             XCTAssertTrue(messages.contains("req"))
             XCTAssertTrue(messages.contains("min"))
             XCTAssertTrue(messages.contains("ouch"))

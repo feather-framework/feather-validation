@@ -5,7 +5,7 @@ extension Rule where T == Int {
         message: String? = nil
     ) -> Self {
         .init(
-            message: message ?? "The value is too small (min: \(limit)."
+            message: message ?? "The value is too small (min: \(limit))."
         ) { value in
             guard value >= limit else {
                 throw RuleError.invalid
@@ -25,7 +25,7 @@ extension Rule where T == Int {
             }
         }
     }
-    
+
     public static func equals(
         _ expectation: Int,
         message: String? = nil

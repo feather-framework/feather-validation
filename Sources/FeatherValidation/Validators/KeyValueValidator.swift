@@ -1,5 +1,5 @@
 public struct KeyValueValidator<T: Sendable>: Validator {
-    
+
     /// Rule invocation
     public enum Invocation: Sendable {
         /// stop after the first failed rule
@@ -52,7 +52,7 @@ public struct KeyValueValidator<T: Sendable>: Validator {
             }
         }
         guard failures.isEmpty else {
-            throw ValidatorError.result(failures)
+            throw ValidatorError(failures: failures)
         }
     }
 }

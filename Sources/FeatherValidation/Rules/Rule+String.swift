@@ -39,7 +39,7 @@ extension Rule where T == String {
             }
         }
     }
-    
+
     public static func length(
         _ expectation: Int,
         message: String? = nil

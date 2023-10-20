@@ -26,7 +26,7 @@ public struct GroupValidator: Validator {
 }
 
 public extension GroupValidator {
-    
+
     func validate() async throws {
         switch strategy {
         case .sequential:
@@ -38,7 +38,7 @@ public extension GroupValidator {
 }
 
 private extension GroupValidator {
-    
+
     func parallelExecution() async throws {
         let result = await withTaskGroup(
             of: [Failure].self
@@ -55,7 +55,7 @@ private extension GroupValidator {
             return result
         }
         guard result.isEmpty else {
-            throw ValidatorError.result(result)
+            throw ValidatorError(failures: result)
         }
     }
 
@@ -66,8 +66,7 @@ private extension GroupValidator {
             result.append(contentsOf: failures)
         }
         guard result.isEmpty else {
-            throw ValidatorError.result(result)
+            throw ValidatorError(failures: result)
         }
     }
 }
-
