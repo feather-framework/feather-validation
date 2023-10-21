@@ -1,9 +1,13 @@
+/// The validator protocol
 public protocol Validator: Sendable {
+    
+    /// Validates a given
     func validate() async throws
 }
 
 public extension Validator {
 
+    /// Returns the validated Faulure objects
     func failures() async -> [Failure] {
         do {
             try await validate()
@@ -19,6 +23,7 @@ public extension Validator {
         }
     }
 
+    /// Check if a validator is valid or not
     func isValid() async -> Bool {
         await failures().isEmpty
     }

@@ -1,18 +1,27 @@
+/// Key value object validator
 public struct KeyValueValidator<T: Sendable>: Validator {
 
-    /// Rule invocation
+    /// Rule invocation method
     public enum Invocation: Sendable {
-        /// stop after the first failed rule
+        /// Stop after the first failed rule
         case first
-        /// evaluate all the rules
+        /// Evaluates all the rules
         case all
     }
 
+    /// The key to uniquely identify a given object
     public let key: String
+    
+    /// The value of a given object
     public let value: T
+    
+    /// Rule invocation method
     public let invocation: Invocation
+    
+    /// List of validation rules
     public let rules: [Rule<T>]
 
+    /// Creates a new KeyValueValidator object
     public init(
         key: String,
         value: T,
@@ -25,6 +34,7 @@ public struct KeyValueValidator<T: Sendable>: Validator {
         self.rules = rules
     }
 
+    /// Validates the given object
     public func validate() async throws {
         var failures: [Failure] = []
         for rule in rules {

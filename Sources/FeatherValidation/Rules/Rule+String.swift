@@ -1,5 +1,6 @@
 extension Rule where T == String {
 
+    /// Check if the value is not empty
     public static func required(
         message: String? = nil
     ) -> Self {
@@ -12,6 +13,7 @@ extension Rule where T == String {
         }
     }
 
+    /// Check if the value length is greater (or equal) than the provided length
     public static func min(
         length: Int,
         message: String? = nil
@@ -26,6 +28,7 @@ extension Rule where T == String {
         }
     }
 
+    /// Check if the value length is smaller (or equal) than the provided length
     public static func max(
         length: Int,
         message: String? = nil

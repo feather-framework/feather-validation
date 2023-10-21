@@ -1,5 +1,6 @@
 extension Rule where T == Int {
 
+    /// Check if the value is greater (or equal) than the provided limit
     public static func min(
         _ limit: Int,
         message: String? = nil
@@ -13,6 +14,7 @@ extension Rule where T == Int {
         }
     }
 
+    /// Check if the value is smaller (or equal) than the provided limit
     public static func max(
         _ limit: Int,
         message: String? = nil
@@ -26,6 +28,7 @@ extension Rule where T == Int {
         }
     }
 
+    /// Check if the value is equal to the expectation
     public static func equals(
         _ expectation: Int,
         message: String? = nil

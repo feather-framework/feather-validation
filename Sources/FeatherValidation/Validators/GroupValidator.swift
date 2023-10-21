@@ -1,13 +1,20 @@
+/// Group validator
 public struct GroupValidator: Validator {
 
+    /// Group validation strategy
     public enum Strategy: Sendable {
+        
+        /// Sequential execution strategy
         case sequential
+        
+        /// Parallel execution strategy
         case parallel
     }
 
     let strategy: Strategy
     var validators: [Validator]
 
+    /// Creates a new GroupValidator
     public init(
         strategy: Strategy = .sequential,
         _ validators: [Validator]
@@ -16,6 +23,7 @@ public struct GroupValidator: Validator {
         self.validators = validators
     }
 
+    /// Creates a new GroupValidator
     public init(
         strategy: Strategy = .sequential,
         @ValidatorBuilder _ validators: () -> [Validator]
@@ -27,6 +35,7 @@ public struct GroupValidator: Validator {
 
 public extension GroupValidator {
 
+    /// Validates the object
     func validate() async throws {
         switch strategy {
         case .sequential:
