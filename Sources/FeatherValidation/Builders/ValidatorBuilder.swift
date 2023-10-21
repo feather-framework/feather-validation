@@ -2,7 +2,7 @@
 @resultBuilder
 public enum ValidatorBuilder {
 
-    /// 
+    ///
     /// Builds a Validator array from the given components
     ///
     /// - Parameters:

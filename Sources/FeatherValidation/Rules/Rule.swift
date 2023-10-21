@@ -1,9 +1,9 @@
 /// Validation rule
 public struct Rule<T: Sendable>: Sendable {
-    
+
     /// The error message if the rule failes during the validation process
     public let message: String
-    
+
     /// The block to execute during the validation process
     public let block: @Sendable (_ value: T) async throws -> Void
 

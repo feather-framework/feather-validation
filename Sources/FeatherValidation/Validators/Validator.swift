@@ -1,6 +1,6 @@
 /// The validator protocol
 public protocol Validator: Sendable {
-    
+
     /// Validates a given
     func validate() async throws
 }

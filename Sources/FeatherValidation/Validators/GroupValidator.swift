@@ -3,10 +3,10 @@ public struct GroupValidator: Validator {
 
     /// Group validation strategy
     public enum Strategy: Sendable {
-        
+
         /// Sequential execution strategy
         case sequential
-        
+
         /// Parallel execution strategy
         case parallel
     }

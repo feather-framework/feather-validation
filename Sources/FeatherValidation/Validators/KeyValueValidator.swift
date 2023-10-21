@@ -11,13 +11,13 @@ public struct KeyValueValidator<T: Sendable>: Validator {
 
     /// The key to uniquely identify a given object
     public let key: String
-    
+
     /// The value of a given object
     public let value: T
-    
+
     /// Rule invocation method
     public let invocation: Invocation
-    
+
     /// List of validation rules
     public let rules: [Rule<T>]
 
