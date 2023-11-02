@@ -10,7 +10,25 @@ public enum ValidatorBuilder {
     /// - Returns: The Validator array
     public static func buildBlock(
         _ components: Validator...
-    ) -> [Validator] {
-        components
+    ) -> Validator {
+        AsyncValidator(components)
+    }
+
+    public static func buildOptional(
+        _ component: Validator?
+    ) -> Validator {
+        component ?? EmptyValidator()
+    }
+
+    public static func buildEither(
+        first component: Validator
+    ) -> Validator {
+        component
+    }
+
+    public static func buildEither(
+        second component: Validator
+    ) -> Validator {
+        component
     }
 }

@@ -13,7 +13,11 @@ public struct KeyValueValidator<T: Sendable>: Validator {
     public let key: String
 
     /// The value of a given object
-    public let value: T
+    public let value: T?
+
+    public let required: Bool
+
+    public let error: String?
 
     /// Rule invocation method
     public let invocation: Invocation
@@ -24,12 +28,16 @@ public struct KeyValueValidator<T: Sendable>: Validator {
     /// Creates a new KeyValueValidator object
     public init(
         key: String,
-        value: T,
+        value: T?,
+        required: Bool = true,
+        error: String? = nil,
         invocation: Invocation = .first,
         rules: [Rule<T>]
     ) {
         self.key = key
         self.value = value
+        self.required = required
+        self.error = error
         self.invocation = invocation
         self.rules = rules
     }
@@ -37,30 +45,45 @@ public struct KeyValueValidator<T: Sendable>: Validator {
     /// Validates the given object
     public func validate() async throws {
         var failures: [Failure] = []
-        for rule in rules {
-            if invocation == .first, !failures.isEmpty {
-                break
-            }
-            do {
-                try await rule.validate(value)
-            }
-            catch RuleError.invalid {
-                failures.append(
-                    .init(
-                        key: key,
-                        message: rule.message
+
+        if let value = value {
+            for rule in rules {
+                if invocation == .first, !failures.isEmpty {
+                    break
+                }
+                do {
+                    try await rule.validate(value)
+                }
+                catch RuleError.invalid {
+                    failures.append(
+                        .init(
+                            key: key,
+                            message: rule.message
+                        )
                     )
-                )
+                }
+                catch {
+                    failures.append(
+                        .init(
+                            key: key,
+                            message: "\(error)"
+                        )
+                    )
+                }
             }
-            catch {
+        }
+        else {
+            if required {
+                let message = error ?? "The value is required."
                 failures.append(
                     .init(
                         key: key,
-                        message: "\(error)"
+                        message: message
                     )
                 )
             }
         }
+
         guard failures.isEmpty else {
             throw ValidatorError(failures: failures)
         }

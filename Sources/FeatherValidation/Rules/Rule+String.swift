@@ -1,11 +1,11 @@
 extension Rule where T == String {
 
     /// Check if the value is not empty
-    public static func required(
+    public static func nonempty(
         message: String? = nil
     ) -> Self {
         .init(
-            message: message ?? "The value is required."
+            message: message ?? "The value is empty."
         ) { value in
             guard !value.isEmpty else {
                 throw RuleError.invalid
