@@ -1,0 +1,33 @@
+{
+  "configurations" : [
+    {
+      "id" : "3C671AC4-D0E5-4E04-9725-334F0E555524",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "FeatherValidationFoundationTests",
+        "name" : "FeatherValidationFoundationTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "FeatherValidationTests",
+        "name" : "FeatherValidationTests"
+      }
+    }
+  ],
+  "version" : 1
+}
