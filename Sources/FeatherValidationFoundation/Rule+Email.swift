@@ -17,7 +17,7 @@ extension Rule where T == String {
         message: String? = nil
     ) -> Self {
         .init(
-            message: message ?? "The value is an invalid URL."
+            message: message ?? "The value is an invalid email."
         ) { value in
             switch rule {
             case .regular:

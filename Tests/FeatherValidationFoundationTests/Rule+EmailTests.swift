@@ -2,7 +2,7 @@ import FeatherValidation
 import FeatherValidationFoundation
 import XCTest
 
-final class Rule_RegexTests: XCTestCase {
+final class Rule_EmailTests: XCTestCase {
 
     func testValidEmail() async throws {
         let v = KeyValueValidator(
