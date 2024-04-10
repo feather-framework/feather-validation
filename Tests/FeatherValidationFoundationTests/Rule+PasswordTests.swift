@@ -14,7 +14,7 @@ final class Rule_PasswordTests: XCTestCase {
         )
         try await v.validate()
     }
-    
+
     func testUppercaseFail() async throws {
         let v = KeyValueValidator(
             key: "password",
@@ -34,7 +34,7 @@ final class Rule_PasswordTests: XCTestCase {
             XCTFail("\(error)")
         }
     }
-    
+
     func testLowercase() async throws {
         let v = KeyValueValidator(
             key: "password",
@@ -45,7 +45,7 @@ final class Rule_PasswordTests: XCTestCase {
         )
         try await v.validate()
     }
-    
+
     func testLowercaseFail() async throws {
         let v = KeyValueValidator(
             key: "password",
@@ -65,7 +65,7 @@ final class Rule_PasswordTests: XCTestCase {
             XCTFail("\(error)")
         }
     }
-    
+
     func testDigit() async throws {
         let v = KeyValueValidator(
             key: "password",
@@ -76,7 +76,7 @@ final class Rule_PasswordTests: XCTestCase {
         )
         try await v.validate()
     }
-    
+
     func testDigitFail() async throws {
         let v = KeyValueValidator(
             key: "password",
@@ -96,7 +96,7 @@ final class Rule_PasswordTests: XCTestCase {
             XCTFail("\(error)")
         }
     }
-    
+
     func testCombined() async throws {
         let v = KeyValueValidator(
             key: "password",
@@ -107,7 +107,7 @@ final class Rule_PasswordTests: XCTestCase {
         )
         try await v.validate()
     }
-    
+
     func testCombinedfail() async throws {
         let v = KeyValueValidator(
             key: "password",
@@ -128,5 +128,4 @@ final class Rule_PasswordTests: XCTestCase {
         }
     }
 
-    
 }

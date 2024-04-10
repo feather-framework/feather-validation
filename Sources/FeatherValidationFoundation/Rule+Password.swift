@@ -50,7 +50,8 @@ extension Rule where T == String {
                     throw RuleError.invalid
                 }
             case .combined:
-                let regex: String = #"(?=.*[A-Z])"# + #"(?=.*[a-z])"# + #"(?=.*\d)"#
+                let regex: String =
+                    #"(?=.*[A-Z])"# + #"(?=.*[a-z])"# + #"(?=.*\d)"#
                 guard
                     let _ = value.range(
                         of: regex,
