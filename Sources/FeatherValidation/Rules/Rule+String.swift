@@ -63,4 +63,49 @@ extension Rule where T == String {
             }
         }
     }
+
+    /// Check if the value is not empty after trimming whitespace.
+    public static func trimmedNonempty(
+        message: String? = nil
+    ) -> Self {
+        .init(
+            message: message ?? "The value is empty."
+        ) { value in
+            let trimmed = value.drop(while: \.isWhitespace).reversed()
+                .drop(while: \.isWhitespace).reversed()
+            guard !trimmed.isEmpty else {
+                throw RuleError.invalid
+            }
+        }
+    }
+
+    /// Check if the value starts with a prefix.
+    public static func starts(
+        with prefix: String,
+        message: String? = nil
+    ) -> Self {
+        .init(
+            message: message
+                ?? "The value does not start with the expected prefix."
+        ) { value in
+            guard value.hasPrefix(prefix) else {
+                throw RuleError.invalid
+            }
+        }
+    }
+
+    /// Check if the value ends with a suffix.
+    public static func ends(
+        with suffix: String,
+        message: String? = nil
+    ) -> Self {
+        .init(
+            message: message
+                ?? "The value does not end with the expected suffix."
+        ) { value in
+            guard value.hasSuffix(suffix) else {
+                throw RuleError.invalid
+            }
+        }
+    }
 }

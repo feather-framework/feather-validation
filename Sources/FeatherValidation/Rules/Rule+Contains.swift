@@ -20,4 +20,34 @@ extension Rule where T: Equatable {
             }
         }
     }
+
+    /// Checks if the value is not part of the provided options array.
+    public static func notContains(
+        options: [T],
+        message: String? = nil
+    ) -> Self {
+        .init(
+            message: message
+                ?? "The value matches a forbidden option."
+        ) { value in
+            guard !options.contains(value) else {
+                throw RuleError.invalid
+            }
+        }
+    }
+
+    /// Checks if the value is not equal to the expected value.
+    public static func notEquals(
+        _ expectation: T,
+        message: String? = nil
+    ) -> Self {
+        .init(
+            message: message
+                ?? "The value matches a forbidden value."
+        ) { value in
+            guard value != expectation else {
+                throw RuleError.invalid
+            }
+        }
+    }
 }

@@ -48,4 +48,58 @@ extension Rule where T == Int {
         }
     }
 
+    /// Check if the value is in a closed range.
+    public static func range(
+        _ range: ClosedRange<Int>,
+        message: String? = nil
+    ) -> Self {
+        .init(
+            message: message
+                ?? "The value is out of the expected range."
+        ) { value in
+            guard range.contains(value) else {
+                throw RuleError.invalid
+            }
+        }
+    }
+
+    /// Check if the value is positive.
+    public static func positive(
+        message: String? = nil
+    ) -> Self {
+        .init(
+            message: message ?? "The value must be positive."
+        ) { value in
+            guard value > 0 else {
+                throw RuleError.invalid
+            }
+        }
+    }
+
+    /// Check if the value is non-negative.
+    public static func nonNegative(
+        message: String? = nil
+    ) -> Self {
+        .init(
+            message: message ?? "The value must be non-negative."
+        ) { value in
+            guard value >= 0 else {
+                throw RuleError.invalid
+            }
+        }
+    }
+
+    /// Check if the value is negative.
+    public static func negative(
+        message: String? = nil
+    ) -> Self {
+        .init(
+            message: message ?? "The value must be negative."
+        ) { value in
+            guard value < 0 else {
+                throw RuleError.invalid
+            }
+        }
+    }
+
 }
