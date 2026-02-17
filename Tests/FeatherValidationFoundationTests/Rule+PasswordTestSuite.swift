@@ -13,7 +13,7 @@ struct Rule_PasswordTestSuite {
 
     @Test
     func uppercase() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "password",
             value: "Abcdefg",
             rules: [
@@ -25,7 +25,7 @@ struct Rule_PasswordTestSuite {
 
     @Test
     func uppercaseFail() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "password",
             value: "abcdefg",
             rules: [
@@ -43,7 +43,7 @@ struct Rule_PasswordTestSuite {
 
     @Test
     func lowercase() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "password",
             value: "Abcdefg",
             rules: [
@@ -55,7 +55,7 @@ struct Rule_PasswordTestSuite {
 
     @Test
     func lowercaseFail() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "password",
             value: "ABCDEFG",
             rules: [
@@ -73,7 +73,7 @@ struct Rule_PasswordTestSuite {
 
     @Test
     func digit() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "password",
             value: "Abcdefg1",
             rules: [
@@ -85,7 +85,7 @@ struct Rule_PasswordTestSuite {
 
     @Test
     func digitFail() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "password",
             value: "ABCDEFG",
             rules: [
@@ -103,7 +103,7 @@ struct Rule_PasswordTestSuite {
 
     @Test
     func combined() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "password",
             value: "Abcdefg1",
             rules: [
@@ -115,7 +115,7 @@ struct Rule_PasswordTestSuite {
 
     @Test
     func combinedFail() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "password",
             value: "Aaavkjn.-",
             rules: [
@@ -133,7 +133,7 @@ struct Rule_PasswordTestSuite {
 
     @Test
     func customMessageOnPasswordFailure() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "password",
             value: "abcdefg",
             rules: [

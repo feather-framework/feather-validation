@@ -4,6 +4,6 @@
 //
 //  Created by Tibor Bödecs on 2023. 11. 02.
 
-struct EmptyValidator: Validator {
-    func validate() async throws(ValidatorError) {}
+struct EmptyValidator: Validation {
+    func validate() async throws(ValidationError) {}
 }

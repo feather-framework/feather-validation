@@ -13,7 +13,7 @@ struct Rule_EmailTestSuite {
 
     @Test
     func validEmail() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "email",
             value: "mail.tib@gmail.com",
             rules: [
@@ -25,7 +25,7 @@ struct Rule_EmailTestSuite {
 
     @Test
     func invalidEmail() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "email",
             value: "@gmail.com",
             rules: [
@@ -43,7 +43,7 @@ struct Rule_EmailTestSuite {
 
     @Test
     func validInternationalEmail() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "email",
             value: "árvíztűrő@example.com",
             rules: [
@@ -56,7 +56,7 @@ struct Rule_EmailTestSuite {
     @Test
     func regularEmailRejectsTooLongLocalPart() async throws {
         let local = String(repeating: "a", count: 65)
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "email",
             value: "\(local)@example.com",
             rules: [

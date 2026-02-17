@@ -12,15 +12,15 @@ struct AsyncValidatorTestSuite {
 
     @Test
     func sequentialAggregatesAllFailures() async throws {
-        let validator = AsyncValidator(
+        let validator = GroupValidator(
             strategy: .sequential,
-            [
-                KeyValueValidator(
+            validators: [
+                Validator(
                     key: "a",
                     value: "",
                     rules: [.nonempty(message: "empty-a")]
                 ),
-                KeyValueValidator(
+                Validator(
                     key: "b",
                     value: "",
                     rules: [.nonempty(message: "empty-b")]
@@ -42,15 +42,15 @@ struct AsyncValidatorTestSuite {
 
     @Test
     func parallelAggregatesAllFailures() async throws {
-        let validator = AsyncValidator(
+        let validator = GroupValidator(
             strategy: .parallel,
-            [
-                KeyValueValidator(
+            validators: [
+                Validator(
                     key: "a",
                     value: "",
                     rules: [.nonempty(message: "empty-a")]
                 ),
-                KeyValueValidator(
+                Validator(
                     key: "b",
                     value: "",
                     rules: [.nonempty(message: "empty-b")]
@@ -72,15 +72,15 @@ struct AsyncValidatorTestSuite {
 
     @Test
     func succeedsWhenAllChildValidatorsSucceed() async throws {
-        let validator = AsyncValidator(
+        let validator = GroupValidator(
             strategy: .parallel,
-            [
-                KeyValueValidator(
+            validators: [
+                Validator(
                     key: "a",
                     value: "alpha",
                     rules: [.nonempty()]
                 ),
-                KeyValueValidator(
+                Validator(
                     key: "b",
                     value: "beta",
                     rules: [.nonempty()]

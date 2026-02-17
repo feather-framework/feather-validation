@@ -23,7 +23,9 @@ public struct Rule<T: Sendable>: Sendable {
     }
 
     /// Validates the rule using the given value
-    public func validate(_ value: T) async throws {
+    public func validate(
+        _ value: T
+    ) async throws {
         try await block(value)
     }
 }

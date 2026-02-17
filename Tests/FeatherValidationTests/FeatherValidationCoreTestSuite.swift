@@ -82,7 +82,7 @@ struct FeatherValidationCoreTestSuite {
 
     @Test
     func invocationFirstStopsOnFirstFailure() async throws {
-        let validator = KeyValueValidator(
+        let validator = Validator(
             key: "value",
             value: "",
             invocation: .first,
@@ -104,7 +104,7 @@ struct FeatherValidationCoreTestSuite {
 
     @Test
     func invocationAllCollectsFailures() async throws {
-        let validator = KeyValueValidator(
+        let validator = Validator(
             key: "value",
             value: "",
             invocation: .all,
@@ -128,7 +128,7 @@ struct FeatherValidationCoreTestSuite {
 
     @Test
     func nilOptionalNotRequiredPasses() async throws {
-        let validator = KeyValueValidator<String>(
+        let validator = Validator<String>(
             key: "value",
             value: nil,
             required: false,
@@ -139,7 +139,7 @@ struct FeatherValidationCoreTestSuite {
 
     @Test
     func nonRuleErrorUsesCustomErrorText() async throws {
-        let validator = KeyValueValidator(
+        let validator = Validator(
             key: "value",
             value: "abc",
             rules: [
@@ -156,7 +156,7 @@ struct FeatherValidationCoreTestSuite {
 
     @Test
     func nonRuleErrorUsesThrownErrorDescriptionExactly() async throws {
-        let validator = KeyValueValidator(
+        let validator = Validator(
             key: "value",
             value: "abc",
             rules: [
@@ -173,7 +173,7 @@ struct FeatherValidationCoreTestSuite {
 
     @Test
     func invocationAllCollectsRuleAndNonRuleFailures() async throws {
-        let validator = KeyValueValidator(
+        let validator = Validator(
             key: "value",
             value: "",
             invocation: .all,
@@ -195,7 +195,7 @@ struct FeatherValidationCoreTestSuite {
 
     @Test
     func invocationFirstStopsAfterNonRuleFailure() async throws {
-        let validator = KeyValueValidator(
+        let validator = Validator(
             key: "value",
             value: "abc",
             invocation: .first,
@@ -216,7 +216,7 @@ struct FeatherValidationCoreTestSuite {
 
     @Test
     func validatorFailuresAndIsValid() async throws {
-        let valid = KeyValueValidator(
+        let valid = Validator(
             key: "value",
             value: "ok",
             rules: [.nonempty()]
@@ -224,7 +224,7 @@ struct FeatherValidationCoreTestSuite {
         #expect(await valid.isValid())
         #expect(await valid.failures().isEmpty)
 
-        let invalid = KeyValueValidator(
+        let invalid = Validator(
             key: "value",
             value: "",
             rules: [.nonempty(message: "empty")]
@@ -248,11 +248,11 @@ struct FeatherValidationCoreTestSuite {
     }
 
     @Test
-    func groupValidatorOptionalBranchUsesEmptyValidator() async throws {
+    func AsyncValidatorOptionalBranchUsesEmptyValidator() async throws {
         let include = false
         let validator = GroupValidator {
             if include {
-                KeyValueValidator(
+                Validator(
                     key: "value",
                     value: "",
                     rules: [.nonempty()]
@@ -263,18 +263,18 @@ struct FeatherValidationCoreTestSuite {
     }
 
     @Test
-    func groupValidatorEitherFirstBranch() async throws {
+    func AsyncValidatorEitherFirstBranch() async throws {
         let chooseFirst = true
         let validator = GroupValidator {
             if chooseFirst {
-                KeyValueValidator(
+                Validator(
                     key: "value",
                     value: "",
                     rules: [.nonempty(message: "first-branch")]
                 )
             }
             else {
-                KeyValueValidator(
+                Validator(
                     key: "value",
                     value: "ok",
                     rules: [.nonempty()]
@@ -293,18 +293,18 @@ struct FeatherValidationCoreTestSuite {
     }
 
     @Test
-    func groupValidatorEitherSecondBranch() async throws {
+    func AsyncValidatorEitherSecondBranch() async throws {
         let chooseFirst = false
         let validator = GroupValidator {
             if chooseFirst {
-                KeyValueValidator(
+                Validator(
                     key: "value",
                     value: "ok",
                     rules: [.nonempty()]
                 )
             }
             else {
-                KeyValueValidator(
+                Validator(
                     key: "value",
                     value: "",
                     rules: [.nonempty(message: "second-branch")]

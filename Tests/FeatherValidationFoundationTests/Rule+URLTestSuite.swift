@@ -13,7 +13,7 @@ struct Rule_URLTestSuite {
 
     @Test
     func validURL() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "url",
             value: "http://swift.org/",
             rules: [
@@ -25,7 +25,7 @@ struct Rule_URLTestSuite {
 
     @Test
     func validFileURL() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "url",
             value: "file:///Users/tib/",
             rules: [
@@ -37,7 +37,7 @@ struct Rule_URLTestSuite {
 
     @Test
     func customProtocol() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "url",
             value: "feather-cms://swift.org",
             rules: [
@@ -49,7 +49,7 @@ struct Rule_URLTestSuite {
 
     @Test
     func invalidURL() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "url",
             value: "invalid",
             rules: [
@@ -67,7 +67,7 @@ struct Rule_URLTestSuite {
 
     @Test
     func missingHostFails() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "url",
             value: "http://",
             rules: [
@@ -85,7 +85,7 @@ struct Rule_URLTestSuite {
 
     @Test
     func missingSchemeFails() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "url",
             value: "swift.org",
             rules: [

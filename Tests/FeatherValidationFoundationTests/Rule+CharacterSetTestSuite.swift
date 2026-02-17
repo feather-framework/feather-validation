@@ -14,7 +14,7 @@ struct Rule_CharacterSetTestSuite {
     @Test
     func valid() async throws {
         let ascii = String(Array(0...127).map { Character(Unicode.Scalar($0)) })
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "ch",
             value: ascii,
             rules: [
@@ -26,7 +26,7 @@ struct Rule_CharacterSetTestSuite {
 
     @Test
     func invalid() async throws {
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "ch",
             value: "árvíztűrő tükörfúrógép",
             rules: [
@@ -45,7 +45,7 @@ struct Rule_CharacterSetTestSuite {
     @Test
     func invalidExtendedAsciiByte() async throws {
         let extended = "abc" + String(UnicodeScalar(128)!)
-        let v = KeyValueValidator(
+        let v = Validator(
             key: "ch",
             value: extended,
             rules: [

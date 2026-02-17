@@ -16,7 +16,7 @@ struct FeatherValidationTestSuite {
         let value = ""
 
         let v = GroupValidator {
-            KeyValueValidator(
+            Validator(
                 key: key,
                 value: value,
                 invocation: .all,
@@ -56,7 +56,7 @@ struct FeatherValidationTestSuite {
         let value: String? = nil
 
         let v = GroupValidator {
-            KeyValueValidator(
+            Validator(
                 key: key,
                 value: value,
                 required: true,
@@ -86,7 +86,7 @@ struct FeatherValidationTestSuite {
         let value: String? = ""
 
         let v = GroupValidator {
-            KeyValueValidator(
+            Validator(
                 key: key,
                 value: value,
                 invocation: .all,
@@ -127,7 +127,7 @@ struct FeatherValidationTestSuite {
 
         let v = GroupValidator {
             if let value = value {
-                KeyValueValidator(
+                Validator(
                     key: key,
                     value: value,
                     required: true,

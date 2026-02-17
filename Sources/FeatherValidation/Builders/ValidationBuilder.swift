@@ -6,23 +6,23 @@
 
 /// DSL syntax for Validator objects
 @resultBuilder
-public enum ValidatorBuilder {
+public enum ValidationBuilder {
 
     /// Builds a validator from the given components.
     /// - Parameter components: The validator components.
     /// - Returns: The composed validator.
     public static func buildBlock(
-        _ components: Validator...
-    ) -> Validator {
-        AsyncValidator(components)
+        _ components: Validation...
+    ) -> Validation {
+        GroupValidator(validators: components)
     }
 
     /// Builds a validator from an optional validator component.
     /// - Parameter component: An optional validator component.
     /// - Returns: The provided validator or an `EmptyValidator` when `nil`.
     public static func buildOptional(
-        _ component: Validator?
-    ) -> Validator {
+        _ component: Validation?
+    ) -> Validation {
         component ?? EmptyValidator()
     }
 
@@ -30,8 +30,8 @@ public enum ValidatorBuilder {
     /// - Parameter component: The validator produced by the first branch.
     /// - Returns: The same validator.
     public static func buildEither(
-        first component: Validator
-    ) -> Validator {
+        first component: Validation
+    ) -> Validation {
         component
     }
 
@@ -39,8 +39,8 @@ public enum ValidatorBuilder {
     /// - Parameter component: The validator produced by the second branch.
     /// - Returns: The same validator.
     public static func buildEither(
-        second component: Validator
-    ) -> Validator {
+        second component: Validation
+    ) -> Validation {
         component
     }
 }
