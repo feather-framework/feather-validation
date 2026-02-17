@@ -61,9 +61,11 @@ Validation examples are available in:
 ## Development
 
 - Build: `swift build`
-- Test: `make test`
+- Test:
+  - local: `swift test`
+  - using Docker: `make docker-test`
 - Format: `make format`
-- Lint: `make lint`
+- Check: `make check`
 
 ## Contributing
 
