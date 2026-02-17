@@ -4,8 +4,10 @@
 //
 //  Created by Tibor Bödecs on 2026. 02. 17.
 
-import FeatherValidation
+
 import Testing
+
+@testable import FeatherValidation
 
 private struct SampleError: Error {}
 private struct DescribedError: Error, CustomStringConvertible {

@@ -4,8 +4,9 @@
 //
 //  Created by Tibor Bödecs on 2026. 02. 17.
 
-import FeatherValidation
 import Testing
+
+@testable import FeatherValidation
 
 @Suite
 struct FeatherValidationTestSuite {

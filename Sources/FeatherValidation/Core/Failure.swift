@@ -5,7 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 02. 17.
 
 /// A single validation failure entry.
-public struct Failure {
+public struct Failure: Sendable {
 
     /// The field key associated with the failure.
     public let key: String
