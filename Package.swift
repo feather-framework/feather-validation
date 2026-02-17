@@ -52,7 +52,8 @@ let package = Package(
         .testTarget(
             name: "FeatherValidationTests",
             dependencies: [
-                .target(name: "FeatherValidation")
+                .target(name: "FeatherValidation"),
+                .target(name: "FeatherValidationFoundation"),
             ],
             swiftSettings: defaultSwiftSettings
         ),
