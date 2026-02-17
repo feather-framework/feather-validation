@@ -7,8 +7,77 @@
 import FeatherValidation
 import Testing
 
+// TODO: split this Rule+XYTestSuite.swift
+
 @Suite
-struct RuleExtensionsTestSuite {
+struct RuleTestSuite {
+    
+    @Test
+    func intMinRule() async throws {
+        try await Rule<Int>.min(10).validate(10)
+        do {
+            try await Rule<Int>.min(10).validate(9)
+            Issue.record("Rule should fail.")
+        }
+        catch RuleError.invalid {}
+        catch {
+            Issue.record("Unexpected error: \(error)")
+        }
+    }
+
+    @Test
+    func intMaxRule() async throws {
+        try await Rule<Int>.max(10).validate(10)
+        do {
+            try await Rule<Int>.max(10).validate(11)
+            Issue.record("Rule should fail.")
+        }
+        catch RuleError.invalid {}
+        catch {
+            Issue.record("Unexpected error: \(error)")
+        }
+    }
+
+    @Test
+    func intEqualsRule() async throws {
+        try await Rule<Int>.equals(42).validate(42)
+        do {
+            try await Rule<Int>.equals(42).validate(41)
+            Issue.record("Rule should fail.")
+        }
+        catch RuleError.invalid {}
+        catch {
+            Issue.record("Unexpected error: \(error)")
+        }
+    }
+
+    @Test
+    func stringLengthRule() async throws {
+        try await Rule<String>.length(3).validate("abc")
+        do {
+            try await Rule<String>.length(3).validate("ab")
+            Issue.record("Rule should fail.")
+        }
+        catch RuleError.invalid {}
+        catch {
+            Issue.record("Unexpected error: \(error)")
+        }
+    }
+
+    @Test
+    func containsRule() async throws {
+        try await Rule<String>.contains(options: ["a", "b"]).validate("a")
+        do {
+            try await Rule<String>.contains(options: ["a", "b"]).validate("c")
+            Issue.record("Rule should fail.")
+        }
+        catch RuleError.invalid {}
+        catch {
+            Issue.record("Unexpected error: \(error)")
+        }
+    }
+    
+    // MARK: - extensions
 
     @Test
     func trimmedNonemptyRule() async throws {

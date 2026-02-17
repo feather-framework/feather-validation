@@ -8,6 +8,8 @@ import FeatherValidation
 import FeatherValidationFoundation
 import Testing
 
+// TODO: move this out to the example repository. no need for this here.
+
 private struct RegistrationInput: Sendable {
     let email: String?
     let password: String?
