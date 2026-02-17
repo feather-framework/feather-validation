@@ -1,3 +1,9 @@
+//
+//  Rule+Collection.swift
+//  feather-validation
+//
+//  Created by Binary Birds on 2026. 02. 17.
+
 extension Rule where T: Collection {
 
     /// Checks if the collection count is greater than or equal to the provided minimum.

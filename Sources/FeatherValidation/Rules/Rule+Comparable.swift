@@ -1,3 +1,9 @@
+//
+//  Rule+Comparable.swift
+//  feather-validation
+//
+//  Created by Binary Birds on 2026. 02. 17.
+
 extension Rule where T: Comparable {
 
     /// Checks if the value is less than the expected value.
