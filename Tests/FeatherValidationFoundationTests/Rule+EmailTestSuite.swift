@@ -36,11 +36,39 @@ struct Rule_EmailTestSuite {
             try await v.validate()
             Issue.record("Validator should fail.")
         }
-        catch let error as ValidatorError {
+        catch let error {
             #expect(error.failures.count == 1)
         }
-        catch {
-            Issue.record("Unexpected error: \(error)")
+    }
+
+    @Test
+    func validInternationalEmail() async throws {
+        let v = KeyValueValidator(
+            key: "email",
+            value: "árvíztűrő@example.com",
+            rules: [
+                .email(rule: .international)
+            ]
+        )
+        try await v.validate()
+    }
+
+    @Test
+    func regularEmailRejectsTooLongLocalPart() async throws {
+        let local = String(repeating: "a", count: 65)
+        let v = KeyValueValidator(
+            key: "email",
+            value: "\(local)@example.com",
+            rules: [
+                .email(rule: .regular)
+            ]
+        )
+        do {
+            try await v.validate()
+            Issue.record("Validator should fail.")
+        }
+        catch let error {
+            #expect(error.failures.count == 1)
         }
     }
 

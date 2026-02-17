@@ -18,7 +18,7 @@ public struct GroupValidator: Validator {
     }
 
     /// Validates the composed validator tree.
-    public func validate() async throws {
+    public func validate() async throws(ValidatorError) {
         try await validator.validate()
     }
 }

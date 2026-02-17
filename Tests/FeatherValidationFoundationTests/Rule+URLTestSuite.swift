@@ -60,11 +60,44 @@ struct Rule_URLTestSuite {
             try await v.validate()
             Issue.record("Validator should fail.")
         }
-        catch let error as ValidatorError {
+        catch let error {
             #expect(error.failures.count == 1)
         }
-        catch {
-            Issue.record("Unexpected error: \(error)")
+    }
+
+    @Test
+    func missingHostFails() async throws {
+        let v = KeyValueValidator(
+            key: "url",
+            value: "http://",
+            rules: [
+                .url(message: "url")
+            ]
+        )
+        do {
+            try await v.validate()
+            Issue.record("Validator should fail.")
+        }
+        catch let error {
+            #expect(error.failures.count == 1)
+        }
+    }
+
+    @Test
+    func missingSchemeFails() async throws {
+        let v = KeyValueValidator(
+            key: "url",
+            value: "swift.org",
+            rules: [
+                .url(message: "url")
+            ]
+        )
+        do {
+            try await v.validate()
+            Issue.record("Validator should fail.")
+        }
+        catch let error {
+            #expect(error.failures.count == 1)
         }
     }
 }

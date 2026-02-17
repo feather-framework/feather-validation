@@ -37,11 +37,27 @@ struct Rule_CharacterSetTestSuite {
             try await v.validate()
             Issue.record("Validator should fail.")
         }
-        catch let error as ValidatorError {
+        catch let error {
             #expect(error.failures.count == 1)
         }
-        catch {
-            Issue.record("Unexpected error: \(error)")
+    }
+
+    @Test
+    func invalidExtendedAsciiByte() async throws {
+        let extended = "abc" + String(UnicodeScalar(128)!)
+        let v = KeyValueValidator(
+            key: "ch",
+            value: extended,
+            rules: [
+                .characterSet(.ascii)
+            ]
+        )
+        do {
+            try await v.validate()
+            Issue.record("Validator should fail.")
+        }
+        catch let error {
+            #expect(error.failures.count == 1)
         }
     }
 

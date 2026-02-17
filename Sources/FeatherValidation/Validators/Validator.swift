@@ -8,7 +8,7 @@
 public protocol Validator: Sendable {
 
     /// Performs validation and throws on failure.
-    func validate() async throws
+    func validate() async throws(ValidatorError)
 }
 
 public extension Validator {
@@ -20,13 +20,8 @@ public extension Validator {
             try await validate()
             return []
         }
-        catch let error as ValidatorError {
+        catch let error {
             return error.failures
-        }
-        catch {
-            fatalError(
-                "Validators are only allowed to throw `ValidatorError.result([Failure])`. \(error)"
-            )
         }
     }
 

@@ -38,7 +38,7 @@ struct FeatherValidationTestSuite {
             try await v.validate()
             Issue.record("Validator should fail.")
         }
-        catch let error as ValidatorError {
+        catch let error {
             #expect(error.failures.count == 3)
             for failure in error.failures {
                 #expect(failure.key == key)
@@ -47,9 +47,6 @@ struct FeatherValidationTestSuite {
             #expect(messages.contains("empty"))
             #expect(messages.contains("min"))
             #expect(messages.contains("ouch"))
-        }
-        catch {
-            Issue.record("Unexpected error: \(error)")
         }
     }
 
@@ -75,14 +72,11 @@ struct FeatherValidationTestSuite {
             try await v.validate()
             Issue.record("Validator should fail.")
         }
-        catch let error as ValidatorError {
+        catch let error {
             #expect(error.failures.count == 1)
 
             let messages = error.failures.map { $0.message }
             #expect(messages.contains("req"))
-        }
-        catch {
-            Issue.record("Unexpected error: \(error)")
         }
     }
 
@@ -114,7 +108,7 @@ struct FeatherValidationTestSuite {
             try await v.validate()
             Issue.record("Validator should fail.")
         }
-        catch let error as ValidatorError {
+        catch let error {
             #expect(error.failures.count == 3)
             for failure in error.failures {
                 #expect(failure.key == key)
@@ -123,9 +117,6 @@ struct FeatherValidationTestSuite {
             #expect(messages.contains("empty"))
             #expect(messages.contains("min"))
             #expect(messages.contains("ouch"))
-        }
-        catch {
-            Issue.record("Unexpected error: \(error)")
         }
     }
 
@@ -156,14 +147,11 @@ struct FeatherValidationTestSuite {
             try await v.validate()
             Issue.record("Validator should fail.")
         }
-        catch let error as ValidatorError {
+        catch let error {
             #expect(error.failures.count == 1)
 
             let messages = error.failures.map { $0.message }
             #expect(messages.contains("req"))
-        }
-        catch {
-            Issue.record("Unexpected error: \(error)")
         }
     }
 }

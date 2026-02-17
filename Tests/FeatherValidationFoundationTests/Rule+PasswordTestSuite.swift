@@ -36,11 +36,8 @@ struct Rule_PasswordTestSuite {
             try await v.validate()
             Issue.record("Validator should fail.")
         }
-        catch let error as ValidatorError {
+        catch let error {
             #expect(error.failures.count == 1)
-        }
-        catch {
-            Issue.record("Unexpected error: \(error)")
         }
     }
 
@@ -69,11 +66,8 @@ struct Rule_PasswordTestSuite {
             try await v.validate()
             Issue.record("Validator should fail.")
         }
-        catch let error as ValidatorError {
+        catch let error {
             #expect(error.failures.count == 1)
-        }
-        catch {
-            Issue.record("Unexpected error: \(error)")
         }
     }
 
@@ -102,11 +96,8 @@ struct Rule_PasswordTestSuite {
             try await v.validate()
             Issue.record("Validator should fail.")
         }
-        catch let error as ValidatorError {
+        catch let error {
             #expect(error.failures.count == 1)
-        }
-        catch {
-            Issue.record("Unexpected error: \(error)")
         }
     }
 
@@ -135,11 +126,27 @@ struct Rule_PasswordTestSuite {
             try await v.validate()
             Issue.record("Validator should fail.")
         }
-        catch let error as ValidatorError {
+        catch let error {
             #expect(error.failures.count == 1)
         }
-        catch {
-            Issue.record("Unexpected error: \(error)")
+    }
+
+    @Test
+    func customMessageOnPasswordFailure() async throws {
+        let v = KeyValueValidator(
+            key: "password",
+            value: "abcdefg",
+            rules: [
+                .password(rule: .uppercase, message: "need uppercase")
+            ]
+        )
+        do {
+            try await v.validate()
+            Issue.record("Validator should fail.")
+        }
+        catch let error {
+            #expect(error.failures.count == 1)
+            #expect(error.failures.first?.message == "need uppercase")
         }
     }
 

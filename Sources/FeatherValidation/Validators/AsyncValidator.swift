@@ -33,7 +33,7 @@ public struct AsyncValidator: Validator {
 public extension AsyncValidator {
 
     /// Validates the object
-    func validate() async throws {
+    func validate() async throws(ValidatorError) {
         switch strategy {
         case .sequential:
             try await sequentialExecution()
@@ -45,7 +45,7 @@ public extension AsyncValidator {
 
 private extension AsyncValidator {
 
-    func parallelExecution() async throws {
+    func parallelExecution() async throws(ValidatorError) {
         if #available(macOS 10.15, *) {
             let result = await withTaskGroup(
                 of: [Failure].self
@@ -70,7 +70,7 @@ private extension AsyncValidator {
         }
     }
 
-    func sequentialExecution() async throws {
+    func sequentialExecution() async throws(ValidatorError) {
         var result: [Failure] = []
         for validator in validators {
             let failures = await validator.failures()

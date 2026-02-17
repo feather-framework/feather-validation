@@ -58,7 +58,7 @@ public struct KeyValueValidator<T: Sendable>: Validator {
     }
 
     /// Validates the given object
-    public func validate() async throws {
+    public func validate() async throws(ValidatorError) {
         var failures: [Failure] = []
 
         if let value = value {

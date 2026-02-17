@@ -26,7 +26,7 @@ public struct Failure {
 extension Failure: Validator {
 
     /// Throws a `ValidatorError` containing this single failure.
-    public func validate() async throws {
+    public func validate() async throws(ValidatorError) {
         throw ValidatorError(failures: [self])
     }
 }
