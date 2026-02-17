@@ -1,3 +1,9 @@
+//
+//  Rule+String.swift
+//  feather-validation
+//
+//  Created by Binary Birds on 2026. 02. 17.
+
 extension Rule where T == String {
 
     /// Check if the value is not empty

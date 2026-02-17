@@ -1,13 +1,16 @@
+//
+//  ValidatorBuilder.swift
+//  feather-validation
+//
+//  Created by Binary Birds on 2026. 02. 17.
+
 /// DSL syntax for Validator objects
 @resultBuilder
 public enum ValidatorBuilder {
 
-    ///
-    /// Builds a Validator array from the given components
-    ///
-    /// - Parameters:
-    ///   - components: The validator components
-    /// - Returns: The Validator array
+    /// Builds a validator from the given components.
+    /// - Parameter components: The validator components.
+    /// - Returns: The composed validator.
     public static func buildBlock(
         _ components: Validator...
     ) -> Validator {

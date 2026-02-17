@@ -1,3 +1,9 @@
+//
+//  Rule+Int.swift
+//  feather-validation
+//
+//  Created by Binary Birds on 2023. 10. 21.
+
 extension Rule where T == Int {
 
     /// Check if the value is greater (or equal) than the provided limit

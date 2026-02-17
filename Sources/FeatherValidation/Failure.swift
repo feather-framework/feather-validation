@@ -1,3 +1,9 @@
+//
+//  Failure.swift
+//  feather-validation
+//
+//  Created by Binary Birds on 2026. 02. 17.
+
 /// A single validation failure entry.
 public struct Failure {
 

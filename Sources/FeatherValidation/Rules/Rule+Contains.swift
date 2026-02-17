@@ -1,3 +1,9 @@
+//
+//  Rule+Contains.swift
+//  feather-validation
+//
+//  Created by Binary Birds on 2023. 10. 21.
+
 extension Rule where T: Equatable {
 
     /// Checks if the value is part of the provided options array

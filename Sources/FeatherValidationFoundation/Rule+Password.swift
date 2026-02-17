@@ -1,3 +1,9 @@
+//
+//  Rule+Password.swift
+//  feather-validation
+//
+//  Created by Binary Birds on 2026. 02. 17.
+
 import Foundation
 import FeatherValidation
 

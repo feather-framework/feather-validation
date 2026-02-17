@@ -1,3 +1,9 @@
+//
+//  ValidatorError.swift
+//  feather-validation
+//
+//  Created by Binary Birds on 2024. 05. 27.
+
 /// Validator error object
 public struct ValidatorError: Error {
 
