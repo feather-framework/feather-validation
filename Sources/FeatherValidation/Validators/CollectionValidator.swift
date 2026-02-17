@@ -5,7 +5,8 @@
 //  Created by Binary Birds on 2026. 02. 17.
 
 /// Validates each element in a collection with a child validator.
-public struct CollectionValidator<C: Collection & Sendable>: Validator where C.Element: Sendable {
+public struct CollectionValidator<C: Collection & Sendable>: Validator
+where C.Element: Sendable {
 
     /// Rule invocation method for collection elements.
     public enum Invocation: Sendable {
@@ -39,7 +40,8 @@ public struct CollectionValidator<C: Collection & Sendable>: Validator where C.E
         required: Bool = true,
         error: String? = nil,
         invocation: Invocation = .all,
-        validator: @escaping @Sendable (_ index: Int, _ value: C.Element) -> Validator
+        validator:
+            @escaping @Sendable (_ index: Int, _ value: C.Element) -> Validator
     ) {
         self.key = key
         self.values = values

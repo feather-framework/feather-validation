@@ -5,7 +5,9 @@
 //  Created by Binary Birds on 2026. 02. 17.
 
 /// Validates dependent fields using a cross-field validation closure.
-public struct DependentFieldsValidator<Left: Sendable, Right: Sendable>: Validator {
+public struct DependentFieldsValidator<Left: Sendable, Right: Sendable>:
+    Validator
+{
 
     /// The left field key.
     public let leftKey: String
@@ -33,7 +35,9 @@ public struct DependentFieldsValidator<Left: Sendable, Right: Sendable>: Validat
         rightValue: Right?,
         failureKey: String? = nil,
         message: String = "The dependent fields are invalid.",
-        _ block: @escaping @Sendable (_ left: Left?, _ right: Right?) async throws -> Void
+        _ block:
+            @escaping @Sendable (_ left: Left?, _ right: Right?) async throws ->
+            Void
     ) {
         self.leftKey = leftKey
         self.leftValue = leftValue
