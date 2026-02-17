@@ -2,7 +2,7 @@
 //  GroupValidator.swift
 //  feather-validation
 //
-//  Created by Binary Birds on 2026. 02. 17.
+//  Created by Tibor Bödecs on 2026. 02. 17.
 
 /// Groups a collection of validators using `ValidatorBuilder`.
 public struct GroupValidator: Validator {

@@ -2,7 +2,7 @@
 //  AsyncValidator.swift
 //  feather-validation
 //
-//  Created by Binary Birds on 2026. 02. 17.
+//  Created by Tibor Bödecs on 2026. 02. 17.
 
 /// Group validator
 public struct AsyncValidator: Validator {
@@ -46,27 +46,22 @@ public extension AsyncValidator {
 private extension AsyncValidator {
 
     func parallelExecution() async throws(ValidatorError) {
-        if #available(macOS 10.15, *) {
-            let result = await withTaskGroup(
-                of: [Failure].self
-            ) { group in
-                for validator in validators {
-                    group.addTask {
-                        await validator.failures()
-                    }
+        let result = await withTaskGroup(
+            of: [Failure].self
+        ) { group in
+            for validator in validators {
+                group.addTask {
+                    await validator.failures()
                 }
-                var result: [Failure] = []
-                for await item in group {
-                    result.append(contentsOf: item)
-                }
-                return result
             }
-            guard result.isEmpty else {
-                throw ValidatorError(failures: result)
+            var result: [Failure] = []
+            for await item in group {
+                result.append(contentsOf: item)
             }
+            return result
         }
-        else {
-            try await sequentialExecution()
+        guard result.isEmpty else {
+            throw ValidatorError(failures: result)
         }
     }
 

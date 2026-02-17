@@ -2,7 +2,7 @@
 //  CollectionValidator.swift
 //  feather-validation
 //
-//  Created by Binary Birds on 2026. 02. 17.
+//  Created by Tibor Bödecs on 2026. 02. 17.
 
 /// Validates each element in a collection with a child validator.
 public struct CollectionValidator<C: Collection & Sendable>: Validator

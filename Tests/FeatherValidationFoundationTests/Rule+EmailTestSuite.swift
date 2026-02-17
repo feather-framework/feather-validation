@@ -2,7 +2,7 @@
 //  Rule+EmailTestSuite.swift
 //  feather-validation
 //
-//  Created by Binary Birds on 2026. 02. 17.
+//  Created by Tibor Bödecs on 2026. 02. 17.
 
 import FeatherValidation
 import FeatherValidationFoundation
