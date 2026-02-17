@@ -1,3 +1,9 @@
+//
+//  AsyncValidator.swift
+//  feather-validation
+//
+//  Created by Tibor Bödecs on 2026. 02. 17.
+
 /// Group validator
 public struct AsyncValidator: Validator {
 
@@ -27,7 +33,7 @@ public struct AsyncValidator: Validator {
 public extension AsyncValidator {
 
     /// Validates the object
-    func validate() async throws {
+    func validate() async throws(ValidatorError) {
         switch strategy {
         case .sequential:
             try await sequentialExecution()
@@ -39,7 +45,7 @@ public extension AsyncValidator {
 
 private extension AsyncValidator {
 
-    func parallelExecution() async throws {
+    func parallelExecution() async throws(ValidatorError) {
         let result = await withTaskGroup(
             of: [Failure].self
         ) { group in
@@ -59,7 +65,7 @@ private extension AsyncValidator {
         }
     }
 
-    func sequentialExecution() async throws {
+    func sequentialExecution() async throws(ValidatorError) {
         var result: [Failure] = []
         for validator in validators {
             let failures = await validator.failures()

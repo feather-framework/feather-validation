@@ -1,3 +1,9 @@
+//
+//  Rule.swift
+//  feather-validation
+//
+//  Created by Tibor Bödecs on 2023. 10. 21.
+
 /// Validation rule
 public struct Rule<T: Sendable>: Sendable {
 

@@ -1,3 +1,9 @@
+//
+//  RuleError.swift
+//  feather-validation
+//
+//  Created by Tibor Bödecs on 2023. 10. 21.
+
 /// Validation rule error
 public enum RuleError: Error {
 
