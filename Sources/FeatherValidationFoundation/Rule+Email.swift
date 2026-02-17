@@ -3,8 +3,11 @@ import FeatherValidation
 
 extension Rule where T == String {
 
-    public enum EmailValidationRule {
+    /// Email validation strictness profiles.
+    public enum EmailValidationRule: Sendable {
+        /// RFC-like ASCII email validation.
         case regular
+        /// Extended international email validation.
         case international
     }
 
@@ -12,6 +15,11 @@ extension Rule where T == String {
     // NOTE: this is a total ripoff from Vapor's source code
     // credits: https://github.com/vapor/vapor
     //
+    /// Validates email addresses using the selected validation profile.
+    /// - Parameters:
+    ///   - rule: The email validation profile to apply.
+    ///   - message: Optional custom failure message.
+    /// - Returns: A string validation rule.
     public static func email(
         rule: EmailValidationRule = .regular,
         message: String? = nil

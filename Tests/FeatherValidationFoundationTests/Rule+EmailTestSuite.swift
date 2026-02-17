@@ -1,10 +1,12 @@
 import FeatherValidation
 import FeatherValidationFoundation
-import XCTest
+import Testing
 
-final class Rule_EmailTests: XCTestCase {
+@Suite
+struct Rule_EmailTestSuite {
 
-    func testValidEmail() async throws {
+    @Test
+    func validEmail() async throws {
         let v = KeyValueValidator(
             key: "email",
             value: "mail.tib@gmail.com",
@@ -15,7 +17,8 @@ final class Rule_EmailTests: XCTestCase {
         try await v.validate()
     }
 
-    func testInvalidEmail() async throws {
+    @Test
+    func invalidEmail() async throws {
         let v = KeyValueValidator(
             key: "email",
             value: "@gmail.com",
@@ -25,13 +28,13 @@ final class Rule_EmailTests: XCTestCase {
         )
         do {
             try await v.validate()
-            XCTFail("Validator should fail.")
+            Issue.record("Validator should fail.")
         }
         catch let error as ValidatorError {
-            XCTAssertEqual(error.failures.count, 1)
+            #expect(error.failures.count == 1)
         }
         catch {
-            XCTFail("\(error)")
+            Issue.record("Unexpected error: \(error)")
         }
     }
 

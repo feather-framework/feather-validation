@@ -1,10 +1,12 @@
 import FeatherValidation
 import FeatherValidationFoundation
-import XCTest
+import Testing
 
-final class Rule_URLTests: XCTestCase {
+@Suite
+struct Rule_URLTestSuite {
 
-    func testValidURL() async throws {
+    @Test
+    func validURL() async throws {
         let v = KeyValueValidator(
             key: "url",
             value: "http://swift.org/",
@@ -15,7 +17,8 @@ final class Rule_URLTests: XCTestCase {
         try await v.validate()
     }
 
-    func testValidFileURL() async throws {
+    @Test
+    func validFileURL() async throws {
         let v = KeyValueValidator(
             key: "url",
             value: "file:///Users/tib/",
@@ -26,7 +29,8 @@ final class Rule_URLTests: XCTestCase {
         try await v.validate()
     }
 
-    func tesCustomProtocol() async throws {
+    @Test
+    func customProtocol() async throws {
         let v = KeyValueValidator(
             key: "url",
             value: "feather-cms://swift.org",
@@ -37,7 +41,8 @@ final class Rule_URLTests: XCTestCase {
         try await v.validate()
     }
 
-    func testInvalidURL() async throws {
+    @Test
+    func invalidURL() async throws {
         let v = KeyValueValidator(
             key: "url",
             value: "invalid",
@@ -47,13 +52,13 @@ final class Rule_URLTests: XCTestCase {
         )
         do {
             try await v.validate()
-            XCTFail("Validator should fail.")
+            Issue.record("Validator should fail.")
         }
         catch let error as ValidatorError {
-            XCTAssertEqual(error.failures.count, 1)
+            #expect(error.failures.count == 1)
         }
         catch {
-            XCTFail("\(error)")
+            Issue.record("Unexpected error: \(error)")
         }
     }
 }

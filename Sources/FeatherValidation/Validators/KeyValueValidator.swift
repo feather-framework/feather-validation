@@ -15,8 +15,10 @@ public struct KeyValueValidator<T: Sendable>: Validator {
     /// The value of a given object
     public let value: T?
 
+    /// Indicates whether `value` must be present.
     public let required: Bool
 
+    /// Optional custom error message for required-value failure.
     public let error: String?
 
     /// Rule invocation method
@@ -26,6 +28,13 @@ public struct KeyValueValidator<T: Sendable>: Validator {
     public let rules: [Rule<T>]
 
     /// Creates a new KeyValueValidator object
+    /// - Parameters:
+    ///   - key: The field key associated with this validation.
+    ///   - value: The value to validate.
+    ///   - required: If `true`, missing values produce a failure.
+    ///   - error: Optional custom message used when a required value is missing.
+    ///   - invocation: The rule invocation strategy.
+    ///   - rules: The rules to evaluate.
     public init(
         key: String,
         value: T?,

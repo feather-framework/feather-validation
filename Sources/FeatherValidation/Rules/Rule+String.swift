@@ -43,6 +43,7 @@ extension Rule where T == String {
         }
     }
 
+    /// Check if the value length is exactly the provided length.
     public static func length(
         _ expectation: Int,
         message: String? = nil

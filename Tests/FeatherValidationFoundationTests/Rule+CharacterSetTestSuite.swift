@@ -1,10 +1,12 @@
 import FeatherValidation
 import FeatherValidationFoundation
-import XCTest
+import Testing
 
-final class Rule_CharacterSetTests: XCTestCase {
+@Suite
+struct Rule_CharacterSetTestSuite {
 
-    func testValid() async throws {
+    @Test
+    func valid() async throws {
         let ascii = String(Array(0...127).map { Character(Unicode.Scalar($0)) })
         let v = KeyValueValidator(
             key: "ch",
@@ -16,7 +18,8 @@ final class Rule_CharacterSetTests: XCTestCase {
         try await v.validate()
     }
 
-    func testInvalid() async throws {
+    @Test
+    func invalid() async throws {
         let v = KeyValueValidator(
             key: "ch",
             value: "árvíztűrő tükörfúrógép",
@@ -26,13 +29,13 @@ final class Rule_CharacterSetTests: XCTestCase {
         )
         do {
             try await v.validate()
-            XCTFail("Validator should fail.")
+            Issue.record("Validator should fail.")
         }
         catch let error as ValidatorError {
-            XCTAssertEqual(error.failures.count, 1)
+            #expect(error.failures.count == 1)
         }
         catch {
-            XCTFail("\(error)")
+            Issue.record("Unexpected error: \(error)")
         }
     }
 

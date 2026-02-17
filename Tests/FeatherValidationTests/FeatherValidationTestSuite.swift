@@ -1,9 +1,11 @@
 import FeatherValidation
-import XCTest
+import Testing
 
-final class FeatherValidationTests: XCTestCase {
+@Suite
+struct FeatherValidationTestSuite {
 
-    func testBasicExample() async throws {
+    @Test
+    func basicExample() async throws {
         let key = "foo"
         let value = ""
 
@@ -28,24 +30,25 @@ final class FeatherValidationTests: XCTestCase {
 
         do {
             try await v.validate()
-            XCTFail("Validator should fail.")
+            Issue.record("Validator should fail.")
         }
         catch let error as ValidatorError {
-            XCTAssertEqual(error.failures.count, 3)
+            #expect(error.failures.count == 3)
             for failure in error.failures {
-                XCTAssertEqual(failure.key, key)
+                #expect(failure.key == key)
             }
             let messages = error.failures.map { $0.message }
-            XCTAssertTrue(messages.contains("empty"))
-            XCTAssertTrue(messages.contains("min"))
-            XCTAssertTrue(messages.contains("ouch"))
+            #expect(messages.contains("empty"))
+            #expect(messages.contains("min"))
+            #expect(messages.contains("ouch"))
         }
         catch {
-            XCTFail("\(error)")
+            Issue.record("Unexpected error: \(error)")
         }
     }
 
-    func testNilExample() async throws {
+    @Test
+    func nilExample() async throws {
         let key = "foo"
         let value: String? = nil
 
@@ -64,20 +67,21 @@ final class FeatherValidationTests: XCTestCase {
 
         do {
             try await v.validate()
-            XCTFail("Validator should fail.")
+            Issue.record("Validator should fail.")
         }
         catch let error as ValidatorError {
-            XCTAssertEqual(error.failures.count, 1)
+            #expect(error.failures.count == 1)
 
             let messages = error.failures.map { $0.message }
-            XCTAssertTrue(messages.contains("req"))
+            #expect(messages.contains("req"))
         }
         catch {
-            XCTFail("\(error)")
+            Issue.record("Unexpected error: \(error)")
         }
     }
 
-    func testOptionalExample() async throws {
+    @Test
+    func optionalExample() async throws {
         let key = "foo"
         let value: String? = ""
 
@@ -102,24 +106,25 @@ final class FeatherValidationTests: XCTestCase {
 
         do {
             try await v.validate()
-            XCTFail("Validator should fail.")
+            Issue.record("Validator should fail.")
         }
         catch let error as ValidatorError {
-            XCTAssertEqual(error.failures.count, 3)
+            #expect(error.failures.count == 3)
             for failure in error.failures {
-                XCTAssertEqual(failure.key, key)
+                #expect(failure.key == key)
             }
             let messages = error.failures.map { $0.message }
-            XCTAssertTrue(messages.contains("empty"))
-            XCTAssertTrue(messages.contains("min"))
-            XCTAssertTrue(messages.contains("ouch"))
+            #expect(messages.contains("empty"))
+            #expect(messages.contains("min"))
+            #expect(messages.contains("ouch"))
         }
         catch {
-            XCTFail("\(error)")
+            Issue.record("Unexpected error: \(error)")
         }
     }
 
-    func testNil2Example() async throws {
+    @Test
+    func nil2Example() async throws {
         let key = "foo"
         let value: String? = nil
 
@@ -143,16 +148,16 @@ final class FeatherValidationTests: XCTestCase {
 
         do {
             try await v.validate()
-            XCTFail("Validator should fail.")
+            Issue.record("Validator should fail.")
         }
         catch let error as ValidatorError {
-            XCTAssertEqual(error.failures.count, 1)
+            #expect(error.failures.count == 1)
 
             let messages = error.failures.map { $0.message }
-            XCTAssertTrue(messages.contains("req"))
+            #expect(messages.contains("req"))
         }
         catch {
-            XCTFail("\(error)")
+            Issue.record("Unexpected error: \(error)")
         }
     }
 }

@@ -3,13 +3,23 @@ import FeatherValidation
 
 extension Rule where T == String {
 
-    public enum PasswordValidationRule {
+    /// Password validation profiles.
+    public enum PasswordValidationRule: Sendable {
+        /// Requires at least one uppercase character.
         case uppercase
+        /// Requires at least one lowercase character.
         case lowercase
+        /// Requires at least one digit.
         case digit
+        /// Requires uppercase, lowercase, and digit characters.
         case combined
     }
 
+    /// Validates passwords using the selected validation profile.
+    /// - Parameters:
+    ///   - rule: The password validation profile to apply.
+    ///   - message: Optional custom failure message.
+    /// - Returns: A string validation rule.
     public static func password(
         rule: PasswordValidationRule = .digit,
         message: String? = nil

@@ -3,7 +3,7 @@ import FeatherValidation
 
 extension CharacterSet {
 
-    // ASCII (byte 0..<128) character set.
+    /// ASCII (`0..<128`) character set.
     public static var ascii: CharacterSet {
         .init((0..<128).map(Unicode.Scalar.init))
     }
@@ -11,6 +11,11 @@ extension CharacterSet {
 
 extension Rule where T == String {
 
+    /// Validates that all characters in the string are contained in `characterSet`.
+    /// - Parameters:
+    ///   - characterSet: The allowed character set.
+    ///   - message: Optional custom failure message.
+    /// - Returns: A string validation rule.
     public static func characterSet(
         _ characterSet: CharacterSet,
         message: String? = nil

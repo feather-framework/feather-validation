@@ -1,10 +1,12 @@
 import FeatherValidation
 import FeatherValidationFoundation
-import XCTest
+import Testing
 
-final class Rule_PasswordTests: XCTestCase {
+@Suite
+struct Rule_PasswordTestSuite {
 
-    func testUppercase() async throws {
+    @Test
+    func uppercase() async throws {
         let v = KeyValueValidator(
             key: "password",
             value: "Abcdefg",
@@ -15,7 +17,8 @@ final class Rule_PasswordTests: XCTestCase {
         try await v.validate()
     }
 
-    func testUppercaseFail() async throws {
+    @Test
+    func uppercaseFail() async throws {
         let v = KeyValueValidator(
             key: "password",
             value: "abcdefg",
@@ -25,17 +28,18 @@ final class Rule_PasswordTests: XCTestCase {
         )
         do {
             try await v.validate()
-            XCTFail("Validator should fail.")
+            Issue.record("Validator should fail.")
         }
         catch let error as ValidatorError {
-            XCTAssertEqual(error.failures.count, 1)
+            #expect(error.failures.count == 1)
         }
         catch {
-            XCTFail("\(error)")
+            Issue.record("Unexpected error: \(error)")
         }
     }
 
-    func testLowercase() async throws {
+    @Test
+    func lowercase() async throws {
         let v = KeyValueValidator(
             key: "password",
             value: "Abcdefg",
@@ -46,7 +50,8 @@ final class Rule_PasswordTests: XCTestCase {
         try await v.validate()
     }
 
-    func testLowercaseFail() async throws {
+    @Test
+    func lowercaseFail() async throws {
         let v = KeyValueValidator(
             key: "password",
             value: "ABCDEFG",
@@ -56,17 +61,18 @@ final class Rule_PasswordTests: XCTestCase {
         )
         do {
             try await v.validate()
-            XCTFail("Validator should fail.")
+            Issue.record("Validator should fail.")
         }
         catch let error as ValidatorError {
-            XCTAssertEqual(error.failures.count, 1)
+            #expect(error.failures.count == 1)
         }
         catch {
-            XCTFail("\(error)")
+            Issue.record("Unexpected error: \(error)")
         }
     }
 
-    func testDigit() async throws {
+    @Test
+    func digit() async throws {
         let v = KeyValueValidator(
             key: "password",
             value: "Abcdefg1",
@@ -77,7 +83,8 @@ final class Rule_PasswordTests: XCTestCase {
         try await v.validate()
     }
 
-    func testDigitFail() async throws {
+    @Test
+    func digitFail() async throws {
         let v = KeyValueValidator(
             key: "password",
             value: "ABCDEFG",
@@ -87,17 +94,18 @@ final class Rule_PasswordTests: XCTestCase {
         )
         do {
             try await v.validate()
-            XCTFail("Validator should fail.")
+            Issue.record("Validator should fail.")
         }
         catch let error as ValidatorError {
-            XCTAssertEqual(error.failures.count, 1)
+            #expect(error.failures.count == 1)
         }
         catch {
-            XCTFail("\(error)")
+            Issue.record("Unexpected error: \(error)")
         }
     }
 
-    func testCombined() async throws {
+    @Test
+    func combined() async throws {
         let v = KeyValueValidator(
             key: "password",
             value: "Abcdefg1",
@@ -108,7 +116,8 @@ final class Rule_PasswordTests: XCTestCase {
         try await v.validate()
     }
 
-    func testCombinedfail() async throws {
+    @Test
+    func combinedFail() async throws {
         let v = KeyValueValidator(
             key: "password",
             value: "Aaavkjn.-",
@@ -118,13 +127,13 @@ final class Rule_PasswordTests: XCTestCase {
         )
         do {
             try await v.validate()
-            XCTFail("Validator should fail.")
+            Issue.record("Validator should fail.")
         }
         catch let error as ValidatorError {
-            XCTAssertEqual(error.failures.count, 1)
+            #expect(error.failures.count == 1)
         }
         catch {
-            XCTFail("\(error)")
+            Issue.record("Unexpected error: \(error)")
         }
     }
 

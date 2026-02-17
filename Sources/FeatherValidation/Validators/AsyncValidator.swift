@@ -40,22 +40,27 @@ public extension AsyncValidator {
 private extension AsyncValidator {
 
     func parallelExecution() async throws {
-        let result = await withTaskGroup(
-            of: [Failure].self
-        ) { group in
-            for validator in validators {
-                group.addTask {
-                    await validator.failures()
+        if #available(macOS 10.15, *) {
+            let result = await withTaskGroup(
+                of: [Failure].self
+            ) { group in
+                for validator in validators {
+                    group.addTask {
+                        await validator.failures()
+                    }
                 }
+                var result: [Failure] = []
+                for await item in group {
+                    result.append(contentsOf: item)
+                }
+                return result
             }
-            var result: [Failure] = []
-            for await item in group {
-                result.append(contentsOf: item)
+            guard result.isEmpty else {
+                throw ValidatorError(failures: result)
             }
-            return result
         }
-        guard result.isEmpty else {
-            throw ValidatorError(failures: result)
+        else {
+            try await sequentialExecution()
         }
     }
 
