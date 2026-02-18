@@ -7,7 +7,7 @@
 /// Validation rule
 public struct Rule<T: Sendable>: Sendable {
 
-    /// The error message if the rule failes during the validation process
+    /// The error message if the rule fails during the validation process.
     public let message: String
 
     /// The block to execute during the validation process
@@ -23,7 +23,9 @@ public struct Rule<T: Sendable>: Sendable {
     }
 
     /// Validates the rule using the given value
-    public func validate(_ value: T) async throws {
+    public func validate(
+        _ value: T
+    ) async throws {
         try await block(value)
     }
 }

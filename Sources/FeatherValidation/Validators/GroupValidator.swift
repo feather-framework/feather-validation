@@ -4,21 +4,87 @@
 //
 //  Created by Tibor Bödecs on 2026. 02. 17.
 
-/// Groups a collection of validators using `ValidatorBuilder`.
-public struct GroupValidator: Validator {
+/// Group validator
+public struct GroupValidator: Validation {
 
-    let validator: Validator
+    /// Group validation strategy
+    public enum Strategy: Sendable {
 
-    /// Creates a group validator from a validator builder closure.
-    /// - Parameter validator: Builder closure that returns a composed validator.
-    public init(
-        @ValidatorBuilder _ validator: () -> Validator
-    ) {
-        self.validator = validator()
+        /// Sequential execution strategy
+        case sequential
+
+        /// Parallel execution strategy
+        case parallel
     }
 
-    /// Validates the composed validator tree.
-    public func validate() async throws(ValidatorError) {
-        try await validator.validate()
+    var strategy: Strategy
+    var validators: [Validation]
+
+    /// Creates a new group validator from an explicit list of validators.
+    public init(
+        strategy: Strategy = .sequential,
+        validators: [Validation]
+    ) {
+        self.strategy = strategy
+        self.validators = validators
+    }
+
+    /// Creates a new group validator from a builder closure.
+    /// - Parameters:
+    ///   - strategy: The execution strategy used to run child validators.
+    ///   - builder: A result-builder closure producing a validation tree.
+    public init(
+        strategy: Strategy = .sequential,
+        @ValidationBuilder _ builder: () -> Validation
+    ) {
+        self.strategy = strategy
+        self.validators = [builder()]
+    }
+}
+
+public extension GroupValidator {
+
+    /// Validates the object
+    func validate() async throws(ValidationError) {
+        switch strategy {
+        case .sequential:
+            try await sequentialExecution()
+        case .parallel:
+            try await parallelExecution()
+        }
+    }
+}
+
+private extension GroupValidator {
+
+    func parallelExecution() async throws(ValidationError) {
+        let result = await withTaskGroup(
+            of: [Failure].self
+        ) { group in
+            for validator in validators {
+                group.addTask {
+                    await validator.failures()
+                }
+            }
+            var result: [Failure] = []
+            for await item in group {
+                result.append(contentsOf: item)
+            }
+            return result
+        }
+        guard result.isEmpty else {
+            throw ValidationError(failures: result)
+        }
+    }
+
+    func sequentialExecution() async throws(ValidationError) {
+        var result: [Failure] = []
+        for validator in validators {
+            let failures = await validator.failures()
+            result.append(contentsOf: failures)
+        }
+        guard result.isEmpty else {
+            throw ValidationError(failures: result)
+        }
     }
 }

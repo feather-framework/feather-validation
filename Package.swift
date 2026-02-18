@@ -3,7 +3,6 @@ import PackageDescription
 
 // NOTE: https://github.com/swift-server/swift-http-server/blob/main/Package.swift
 var defaultSwiftSettings: [SwiftSetting] = [
-    
     // https://github.com/swiftlang/swift-evolution/blob/main/proposals/0441-formalize-language-mode-terminology.md
     .swiftLanguageMode(.v6),
     // https://github.com/swiftlang/swift-evolution/blob/main/proposals/0444-member-import-visibility.md
@@ -52,7 +51,8 @@ let package = Package(
         .testTarget(
             name: "FeatherValidationTests",
             dependencies: [
-                .target(name: "FeatherValidation")
+                .target(name: "FeatherValidation"),
+                .target(name: "FeatherValidationFoundation"),
             ],
             swiftSettings: defaultSwiftSettings
         ),
