@@ -57,7 +57,10 @@ struct Rule_CharacterSetTestSuite {
         }
         catch let error {
             #expect(error.failures.count == 1)
-            #expect(error.failures.first?.message == "The value contains invalid character(s).")
+            #expect(
+                error.failures.first?.message
+                    == "The value contains invalid character(s)."
+            )
         }
     }
 

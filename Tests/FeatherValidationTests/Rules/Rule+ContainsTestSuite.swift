@@ -29,7 +29,8 @@ struct RuleContainsTestSuite {
         try await Rule<String>.notEquals("x").validate("a")
 
         do {
-            try await Rule<String>.notContains(options: ["x", "y"]).validate("x")
+            try await Rule<String>.notContains(options: ["x", "y"])
+                .validate("x")
             Issue.record("Rule should fail.")
         }
         catch RuleError.invalid {}

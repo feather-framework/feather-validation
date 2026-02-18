@@ -1,10 +1,10 @@
 //
-//  ValidatorBuilder.swift
+//  ValidationBuilder.swift
 //  feather-validation
 //
 //  Created by Tibor Bödecs on 2026. 02. 17.
 
-/// DSL syntax for Validator objects
+/// DSL syntax for composing `Validation` objects.
 @resultBuilder
 public enum ValidationBuilder {
 

@@ -1,5 +1,5 @@
 //
-//  AsyncValidator.swift
+//  GroupValidator.swift
 //  feather-validation
 //
 //  Created by Tibor Bödecs on 2026. 02. 17.
@@ -20,7 +20,7 @@ public struct GroupValidator: Validation {
     var strategy: Strategy
     var validators: [Validation]
 
-    /// Creates a new AsyncValidator
+    /// Creates a new group validator from an explicit list of validators.
     public init(
         strategy: Strategy = .sequential,
         validators: [Validation]
@@ -29,6 +29,10 @@ public struct GroupValidator: Validation {
         self.validators = validators
     }
 
+    /// Creates a new group validator from a builder closure.
+    /// - Parameters:
+    ///   - strategy: The execution strategy used to run child validators.
+    ///   - builder: A result-builder closure producing a validation tree.
     public init(
         strategy: Strategy = .sequential,
         @ValidationBuilder _ builder: () -> Validation

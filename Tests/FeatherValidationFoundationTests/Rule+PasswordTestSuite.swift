@@ -116,7 +116,10 @@ struct Rule_PasswordTestSuite {
         }
         catch let error {
             #expect(error.failures.count == 1)
-            #expect(error.failures.first?.message == "The value is an invalid password.")
+            #expect(
+                error.failures.first?.message
+                    == "The value is an invalid password."
+            )
         }
     }
 

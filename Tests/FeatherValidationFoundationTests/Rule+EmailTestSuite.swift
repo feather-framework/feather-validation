@@ -56,7 +56,10 @@ struct Rule_EmailTestSuite {
         }
         catch let error {
             #expect(error.failures.count == 1)
-            #expect(error.failures.first?.message == "The value is an invalid email.")
+            #expect(
+                error.failures.first?.message
+                    == "The value is an invalid email."
+            )
         }
     }
 

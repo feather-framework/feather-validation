@@ -16,7 +16,7 @@ public struct Failure: Sendable {
 
 extension Failure: Validation {
 
-    /// Throws a `ValidatorError` containing this single failure.
+    /// Throws a `ValidationError` containing this single failure.
     public func validate() async throws(ValidationError) {
         throw ValidationError(failures: [self])
     }

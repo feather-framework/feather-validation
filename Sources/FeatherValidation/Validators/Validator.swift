@@ -1,5 +1,5 @@
 //
-//  KeyValueValidator.swift
+//  Validator.swift
 //  feather-validation
 //
 //  Created by Tibor Bödecs on 2026. 02. 17.
@@ -33,7 +33,7 @@ public struct Validator<T: Sendable>: Validation {
     /// List of validation rules
     public let rules: [Rule<T>]
 
-    /// Creates a new KeyValueValidator object
+    /// Creates a new validator.
     /// - Parameters:
     ///   - key: The field key associated with this validation.
     ///   - value: The value to validate.

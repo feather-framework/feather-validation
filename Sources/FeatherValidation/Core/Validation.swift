@@ -1,10 +1,10 @@
 //
-//  Validator.swift
+//  Validation.swift
 //  feather-validation
 //
 //  Created by Tibor Bödecs on 2026. 02. 17.
 
-/// The validator protocol
+/// The validation protocol.
 public protocol Validation: Sendable {
 
     /// Performs validation and throws on failure.
