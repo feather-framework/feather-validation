@@ -43,6 +43,25 @@ struct Rule_CharacterSetTestSuite {
     }
 
     @Test
+    func invalidUsesDefaultMessage() async throws {
+        let v = Validator(
+            key: "ch",
+            value: "árvíztűrő tükörfúrógép",
+            rules: [
+                .characterSet(.ascii)
+            ]
+        )
+        do {
+            try await v.validate()
+            Issue.record("Validator should fail.")
+        }
+        catch let error {
+            #expect(error.failures.count == 1)
+            #expect(error.failures.first?.message == "The value contains invalid character(s).")
+        }
+    }
+
+    @Test
     func invalidExtendedAsciiByte() async throws {
         let extended = "abc" + String(UnicodeScalar(128)!)
         let v = Validator(
@@ -58,6 +77,25 @@ struct Rule_CharacterSetTestSuite {
         }
         catch let error {
             #expect(error.failures.count == 1)
+        }
+    }
+
+    @Test
+    func customMessageOnCharacterSetFailure() async throws {
+        let v = Validator(
+            key: "ch",
+            value: "árvíztűrő tükörfúrógép",
+            rules: [
+                .characterSet(.ascii, message: "ascii only")
+            ]
+        )
+        do {
+            try await v.validate()
+            Issue.record("Validator should fail.")
+        }
+        catch let error {
+            #expect(error.failures.count == 1)
+            #expect(error.failures.first?.message == "ascii only")
         }
     }
 

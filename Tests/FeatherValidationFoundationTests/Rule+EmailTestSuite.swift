@@ -42,6 +42,25 @@ struct Rule_EmailTestSuite {
     }
 
     @Test
+    func invalidEmailUsesDefaultMessage() async throws {
+        let v = Validator(
+            key: "email",
+            value: "broken",
+            rules: [
+                .email()
+            ]
+        )
+        do {
+            try await v.validate()
+            Issue.record("Validator should fail.")
+        }
+        catch let error {
+            #expect(error.failures.count == 1)
+            #expect(error.failures.first?.message == "The value is an invalid email.")
+        }
+    }
+
+    @Test
     func validInternationalEmail() async throws {
         let v = Validator(
             key: "email",
@@ -69,6 +88,63 @@ struct Rule_EmailTestSuite {
         }
         catch let error {
             #expect(error.failures.count == 1)
+        }
+    }
+
+    @Test
+    func defaultRuleBehavesAsRegular() async throws {
+        let v = Validator(
+            key: "email",
+            value: "árvíztűrő@example.com",
+            rules: [
+                .email()
+            ]
+        )
+        do {
+            try await v.validate()
+            Issue.record("Validator should fail.")
+        }
+        catch let error {
+            #expect(error.failures.count == 1)
+        }
+    }
+
+    @Test
+    func regularEmailRejectsTooLongAddress() async throws {
+        let local = String(repeating: "a", count: 64)
+        let domainLabel = String(repeating: "b", count: 252)
+        let v = Validator(
+            key: "email",
+            value: "\(local)@\(domainLabel).com",
+            rules: [
+                .email(rule: .regular)
+            ]
+        )
+        do {
+            try await v.validate()
+            Issue.record("Validator should fail.")
+        }
+        catch let error {
+            #expect(error.failures.count == 1)
+        }
+    }
+
+    @Test
+    func customMessageOnEmailFailure() async throws {
+        let v = Validator(
+            key: "email",
+            value: "broken",
+            rules: [
+                .email(message: "bad email")
+            ]
+        )
+        do {
+            try await v.validate()
+            Issue.record("Validator should fail.")
+        }
+        catch let error {
+            #expect(error.failures.count == 1)
+            #expect(error.failures.first?.message == "bad email")
         }
     }
 

@@ -1,5 +1,5 @@
 //
-//  Rule+IntTestSuite.swift
+//  Rule+StringTestSuite.swift
 //  feather-validation
 //
 //  Created by Tibor Bödecs on 2026. 02. 17.
@@ -8,13 +8,34 @@ import FeatherValidation
 import Testing
 
 @Suite
-struct RuleIntTestSuite {
+struct RuleStringTestSuite {
 
     @Test
-    func intMinRule() async throws {
-        try await Rule<Int>.min(10).validate(10)
+    func nonemptyMinAndMaxRules() async throws {
+        try await Rule<String>.nonempty().validate("x")
+        try await Rule<String>.min(length: 2).validate("ab")
+        try await Rule<String>.max(length: 3).validate("abc")
+
         do {
-            try await Rule<Int>.min(10).validate(9)
+            try await Rule<String>.nonempty().validate("")
+            Issue.record("Rule should fail.")
+        }
+        catch RuleError.invalid {}
+        catch {
+            Issue.record("Unexpected error: \(error)")
+        }
+
+        do {
+            try await Rule<String>.min(length: 2).validate("a")
+            Issue.record("Rule should fail.")
+        }
+        catch RuleError.invalid {}
+        catch {
+            Issue.record("Unexpected error: \(error)")
+        }
+
+        do {
+            try await Rule<String>.max(length: 3).validate("abcd")
             Issue.record("Rule should fail.")
         }
         catch RuleError.invalid {}
@@ -24,10 +45,10 @@ struct RuleIntTestSuite {
     }
 
     @Test
-    func intMaxRule() async throws {
-        try await Rule<Int>.max(10).validate(10)
+    func stringLengthRule() async throws {
+        try await Rule<String>.length(3).validate("abc")
         do {
-            try await Rule<Int>.max(10).validate(11)
+            try await Rule<String>.length(3).validate("ab")
             Issue.record("Rule should fail.")
         }
         catch RuleError.invalid {}
@@ -37,10 +58,10 @@ struct RuleIntTestSuite {
     }
 
     @Test
-    func intEqualsRule() async throws {
-        try await Rule<Int>.equals(42).validate(42)
+    func trimmedNonemptyRule() async throws {
+        try await Rule<String>.trimmedNonempty().validate("  abc ")
         do {
-            try await Rule<Int>.equals(42).validate(41)
+            try await Rule<String>.trimmedNonempty().validate("  \n\t ")
             Issue.record("Rule should fail.")
         }
         catch RuleError.invalid {}
@@ -50,14 +71,12 @@ struct RuleIntTestSuite {
     }
 
     @Test
-    func intRangeAndSignRules() async throws {
-        try await Rule<Int>.range(1...3).validate(2)
-        try await Rule<Int>.positive().validate(1)
-        try await Rule<Int>.nonNegative().validate(0)
-        try await Rule<Int>.negative().validate(-1)
+    func startsAndEndsRules() async throws {
+        try await Rule<String>.starts(with: "pre").validate("prefix")
+        try await Rule<String>.ends(with: "fix").validate("prefix")
 
         do {
-            try await Rule<Int>.range(1...3).validate(4)
+            try await Rule<String>.starts(with: "x").validate("prefix")
             Issue.record("Rule should fail.")
         }
         catch RuleError.invalid {}
@@ -66,25 +85,7 @@ struct RuleIntTestSuite {
         }
 
         do {
-            try await Rule<Int>.positive().validate(0)
-            Issue.record("Rule should fail.")
-        }
-        catch RuleError.invalid {}
-        catch {
-            Issue.record("Unexpected error: \(error)")
-        }
-
-        do {
-            try await Rule<Int>.nonNegative().validate(-1)
-            Issue.record("Rule should fail.")
-        }
-        catch RuleError.invalid {}
-        catch {
-            Issue.record("Unexpected error: \(error)")
-        }
-
-        do {
-            try await Rule<Int>.negative().validate(0)
+            try await Rule<String>.ends(with: "z").validate("prefix")
             Issue.record("Rule should fail.")
         }
         catch RuleError.invalid {}

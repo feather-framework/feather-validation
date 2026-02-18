@@ -102,6 +102,25 @@ struct Rule_PasswordTestSuite {
     }
 
     @Test
+    func passwordRuleUsesDefaultMessageOnFailure() async throws {
+        let v = Validator(
+            key: "password",
+            value: "abcdefg",
+            rules: [
+                .password(rule: .uppercase)
+            ]
+        )
+        do {
+            try await v.validate()
+            Issue.record("Validator should fail.")
+        }
+        catch let error {
+            #expect(error.failures.count == 1)
+            #expect(error.failures.first?.message == "The value is an invalid password.")
+        }
+    }
+
+    @Test
     func combined() async throws {
         let v = Validator(
             key: "password",
@@ -147,6 +166,24 @@ struct Rule_PasswordTestSuite {
         catch let error {
             #expect(error.failures.count == 1)
             #expect(error.failures.first?.message == "need uppercase")
+        }
+    }
+
+    @Test
+    func defaultPasswordRuleIsDigit() async throws {
+        let v = Validator(
+            key: "password",
+            value: "abcDEF",
+            rules: [
+                .password()
+            ]
+        )
+        do {
+            try await v.validate()
+            Issue.record("Validator should fail.")
+        }
+        catch let error {
+            #expect(error.failures.count == 1)
         }
     }
 

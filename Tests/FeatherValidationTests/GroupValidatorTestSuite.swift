@@ -8,8 +8,6 @@ import Testing
 
 @testable import FeatherValidation
 
-// TODO: check for duplicate tests...
-
 @Suite
 struct GroupValidatorTestSuite {
 
@@ -84,7 +82,7 @@ struct GroupValidatorTestSuite {
     }
 
     @Test
-    func optionalExample() async throws {
+    func optionalPresentValueStillRunsRules() async throws {
         let key = "foo"
         let value: String? = ""
 
@@ -237,9 +235,9 @@ struct GroupValidatorTestSuite {
         )
         try await validator.validate()
     }
-    
+
     @Test
-    func AsyncValidatorOptionalBranchUsesEmptyValidator() async throws {
+    func groupValidatorOptionalBranchUsesEmptyValidator() async throws {
         let include = false
         let validator = GroupValidator {
             if include {
@@ -254,7 +252,7 @@ struct GroupValidatorTestSuite {
     }
 
     @Test
-    func AsyncValidatorEitherFirstBranch() async throws {
+    func groupValidatorEitherFirstBranch() async throws {
         let chooseFirst = true
         let validator = GroupValidator {
             if chooseFirst {
@@ -284,7 +282,7 @@ struct GroupValidatorTestSuite {
     }
 
     @Test
-    func AsyncValidatorEitherSecondBranch() async throws {
+    func groupValidatorEitherSecondBranch() async throws {
         let chooseFirst = false
         let validator = GroupValidator {
             if chooseFirst {

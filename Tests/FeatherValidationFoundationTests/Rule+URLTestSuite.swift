@@ -66,6 +66,25 @@ struct Rule_URLTestSuite {
     }
 
     @Test
+    func invalidURLUsesDefaultMessage() async throws {
+        let v = Validator(
+            key: "url",
+            value: "invalid",
+            rules: [
+                .url()
+            ]
+        )
+        do {
+            try await v.validate()
+            Issue.record("Validator should fail.")
+        }
+        catch let error {
+            #expect(error.failures.count == 1)
+            #expect(error.failures.first?.message == "The value is an invalid URL.")
+        }
+    }
+
+    @Test
     func missingHostFails() async throws {
         let v = Validator(
             key: "url",
@@ -98,6 +117,25 @@ struct Rule_URLTestSuite {
         }
         catch let error {
             #expect(error.failures.count == 1)
+        }
+    }
+
+    @Test
+    func customMessageOnURLFailure() async throws {
+        let v = Validator(
+            key: "url",
+            value: "invalid",
+            rules: [
+                .url(message: "bad url")
+            ]
+        )
+        do {
+            try await v.validate()
+            Issue.record("Validator should fail.")
+        }
+        catch let error {
+            #expect(error.failures.count == 1)
+            #expect(error.failures.first?.message == "bad url")
         }
     }
 }
