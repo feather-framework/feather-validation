@@ -2,7 +2,11 @@
 
 A validation library for server-side Swift projects.
 
-[![Release: 1.0.0-beta.1](https://img.shields.io/badge/Release-1%2E0%2E0--beta%2E1-F05138)(https://github.com/feather-framework/feather-validation/releases/tag/1.0.0-beta.1)
+[
+    ![Release: 1.0.0-beta.1](https://img.shields.io/badge/Release-1%2E0%2E0--beta%2E1-F05138)
+](
+    https://github.com/feather-framework/feather-validation/releases/tag/1.0.0-beta.1
+)
 
 ## Features
 
@@ -43,7 +47,11 @@ Then add `FeatherValidation` (and optionally `FeatherValidationFoundation`) to y
 
 ## Usage
 
-[![DocC API documentation](https://img.shields.io/badge/DocC-API_documentation-F05138)](https://feather-framework.github.io/feather-validation/)
+[
+    ![DocC API documentation](https://img.shields.io/badge/DocC-API_documentation-F05138)
+](
+    https://feather-framework.github.io/feather-validation/
+)
 
 API documentation is available at the following link.
 
